@@ -4,39 +4,126 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Magic Academy</title>
+
 <style>
 body{
 margin:0;
+font-family:Arial,sans-serif;
+background:linear-gradient(180deg,#17002f,#090012);
+color:white;
 display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
-background:linear-gradient(135deg,#1a0033,#4b0082);
-font-family:Arial,sans-serif;
-color:white;
 }
-.box{
+
+.game{
+width:360px;
 text-align:center;
 }
-button{
-padding:15px 30px;
-font-size:22px;
-border:none;
-border-radius:12px;
-background:#8a2be2;
-color:white;
-cursor:pointer;
+
+.top{
+display:flex;
+justify-content:space-between;
+margin-bottom:20px;
+font-size:20px;
 }
-button:hover{
-background:#a64dff;
+
+.crystal{
+font-size:120px;
+cursor:pointer;
+transition:.1s;
+user-select:none;
+filter:drop-shadow(0 0 15px violet);
+}
+
+.crystal:active{
+transform:scale(.92);
+}
+
+.level{
+margin-top:20px;
+font-size:22px;
+}
+
+.menu{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+display:flex;
+justify-content:space-around;
+background:#1d1036;
+padding:15px;
+font-size:18px;
 }
 </style>
 </head>
+
 <body>
-<div class="box">
-<h1>🧙 Magic Academy</h1>
-<p>Welcome to the world of magic!</p>
-<button>▶ Play</button>
+
+<div class="game">
+
+<div class="top">
+<div>💜 <span id="mana">0</span></div>
+<div>⚡ <span id="energy">100</span></div>
 </div>
+
+<div class="crystal" onclick="tap()">
+🔮
+</div>
+
+<div class="level">
+🧙 Level <span id="level">1</span>
+</div>
+
+</div>
+
+<div class="menu">
+<div>🔮 Magic</div>
+<div>📖 Spells</div>
+<div>🎒 Bag</div>
+<div>👤 Profile</div>
+</div>
+
+<script>
+let mana = Number(localStorage.getItem("mana")) || 0;
+let energy = Number(localStorage.getItem("energy")) || 100;
+let level = Number(localStorage.getItem("level")) || 1;
+
+function update(){
+document.getElementById("mana").textContent = mana;
+document.getElementById("energy").textContent = energy;
+document.getElementById("level").textContent = level;
+}
+
+function tap(){
+if(energy<=0)return;
+
+mana++;
+energy--;
+
+if(mana>=100*level){
+level++;
+}
+
+localStorage.setItem("mana",mana);
+localStorage.setItem("energy",energy);
+localStorage.setItem("level",level);
+
+update();
+}
+
+setInterval(()=>{
+if(energy<100){
+energy++;
+localStorage.setItem("energy",energy);
+update();
+}
+},1000);
+
+update();
+</script>
+
 </body>
 </html>
