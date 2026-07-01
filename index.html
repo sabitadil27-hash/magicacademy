@@ -67,7 +67,18 @@ font-size:18px;
 
 <div class="top">
 <div>💜 <span id="mana">0</span></div>
-<div>⚡ <span id="energy">100</span></div>
+<div>⚡ <span id="energy">100</span></div><div>🪙 <span id="gold">0</span></div>
+
+<div style="margin-top:15px;">
+XP
+<div style="width:100%;height:12px;background:#2a1745;border-radius:10px;">
+<div id="xpbar" style="width:0%;height:12px;background:#b84dff;border-radius:10px;"></div>
+</div>
+</div>
+
+<button onclick="dailyReward()" style="margin-top:20px;padding:10px 20px;border:none;border-radius:12px;background:#8b5cf6;color:white;font-size:18px;">
+🎁 Daily Reward
+</button>
 </div>
 
 <div class="crystal" onclick="tap()">
@@ -113,7 +124,10 @@ localStorage.setItem("mana",mana);
 localStorage.setItem("energy",energy);
 localStorage.setItem("level",level);
 
-update();
+update();document.getElementById("gold").textContent = gold;
+
+let xp=(mana%(100*level))/(100*level)*100;
+document.getElementById("xpbar").style.width=xp+"%";
 }
 
 setInterval(()=>{
@@ -125,6 +139,14 @@ update();
 },1000);
 
 update();
+let gold = Number(localStorage.getItem("gold")) || 0;
+
+function dailyReward(){
+    gold += 100;
+    localStorage.setItem("gold", gold);
+    update();
+    alert("🎉 You received 100 Gold!");
+}
 </script>
 
 </body>
