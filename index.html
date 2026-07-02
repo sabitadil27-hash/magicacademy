@@ -84,7 +84,7 @@ XP
     </button>
 </div>
 
-<div class="crystal" onclick="tap()"><div id="monster" style="font-size:70px; margin-bottom:20px;">
+style="font-size:70px; margin-bottom:20px;">
 👹
 </div>
 
@@ -120,7 +120,12 @@ function update(){
 document.getElementById("mana").textContent = mana;
 document.getElementById("energy").textContent = energy;
 document.getElementById("level").textContent = level;
-}
+document.getElementById("gold").textContent = gold;
+document.getElementById("monsterhp").textContent = monsterHp;
+
+let xp=(mana%(100*level))/(100*level)*100;
+document.getElementById("xpbar").style.width=xp+"%";
+    }
 
 function tap(){
     document.getElementById("monsterhp").textContent = monsterHp;
