@@ -1,0 +1,68 @@
+let mana = 0;
+let energy = 100;
+let gold = 0;
+let level = 1;
+let xp = 0;
+let monsterHP = 100;
+
+function update(){
+    document.getElementById("mana").textContent = mana;
+    document.getElementById("energy").textContent = energy;
+    document.getElementById("gold").textContent = gold;
+    document.getElementById("level").textContent = level;
+    document.getElementById("monsterHP").textContent = monsterHP;
+
+    document.getElementById("xpBar").style.width = xp + "%";
+}
+
+function tap(){
+    if(energy <= 0){
+        alert("⚡ No energy!");
+        return;
+    }
+
+    mana++;
+    energy--;
+    xp++;
+
+    if(xp >= 100){
+        xp = 0;
+        level++;
+        alert("🎉 Level Up!");
+    }
+
+    update();
+}
+
+function castFireball(){
+    if(energy < 20){
+        alert("⚡ Need 20 energy!");
+        return;
+    }
+
+    energy -= 20;
+    monsterHP -= 25;
+
+    if(monsterHP <= 0){
+        monsterHP = 100;
+        gold += 50;
+        alert("👹 Monster defeated! +50 Gold");
+    }
+
+    update();
+}
+
+function dailyReward(){
+    gold += 100;
+    alert("🎁 +100 Gold!");
+    update();
+}
+
+setInterval(()=>{
+    if(energy < 100){
+        energy++;
+        update();
+    }
+},1000);
+
+update();
