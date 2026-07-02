@@ -5,93 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Magic Academy</title>
 
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-body{
-background:linear-gradient(180deg,#2b1055,#120024,#05000d);
-color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
-
-.game{
-width:360px;
-text-align:center;
-padding:20px;
-}
-
-h1{
-color:#d8b4fe;
-margin-bottom:10px;
-}
-
-.stats{
-display:flex;
-justify-content:space-between;
-margin:15px 0;
-font-size:20px;
-}
-
-.bar{
-width:100%;
-height:12px;
-background:#2a1745;
-border-radius:10px;
-overflow:hidden;
-margin-bottom:15px;
-}
-
-.fill{
-height:100%;
-width:0%;
-background:#b84dff;
-}
-
-#monster{
-font-size:70px;
-margin:20px 0 10px;
-}
-
-.crystal{
-font-size:110px;
-cursor:pointer;
-transition:.15s;
-user-select:none;
-}
-
-.crystal:active{
-transform:scale(.9);
-}
-
-button{
-margin-top:10px;
-padding:10px 20px;
-border:none;
-border-radius:10px;
-font-size:17px;
-cursor:pointer;
-background:#7c3aed;
-color:white;
-}
-
-button:hover{
-background:#6d28d9;
-}
-
-.menu{
-margin-top:20px;
-display:flex;
-justify-content:space-around;
-font-size:18px;
-}</style>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -99,7 +13,7 @@ font-size:18px;
 <div class="game">
 
 <h1>🧙 Magic Academy</h1>
-<p>Become the strongest wizard!</p>
+<p class="subtitle">Become the strongest wizard!</p>
 
 <div class="stats">
 <div>💜 <span id="mana">0</span></div>
@@ -107,103 +21,37 @@ font-size:18px;
 <div>🪙 <span id="gold">0</span></div>
 </div>
 
-<div>Level <span id="level">1</span></div>
-
-<div class="bar">
-<div class="fill" id="xpbar"></div>
+<div class="xp">
+<div id="xpBar"></div>
 </div>
 
-<div id="monster">👹</div>
-<div>❤️ HP: <span id="monsterhp">100</span>/100</div>
+<h2>Level <span id="level">1</span></h2>
+
+<div class="monster">
+<div id="monsterEmoji">👹</div>
+<p>HP: <span id="monsterHP">100</span>/100</p>
+</div>
 
 <div class="crystal" onclick="tap()">
 🔮
 </div>
 
-<button onclick="dailyReward()">🎁 Daily Reward</button>
+<div class="buttons">
 <button onclick="castFireball()">🔥 Fireball</button>
-
-<div class="menu">
-<div onclick="buySpell()">📖 Spells</div>
-<div>🎒 Bag</div>
-<div>👤 Profile</div>
+<button onclick="dailyReward()">🎁 Daily Reward</button>
 </div>
 
-<script>
-let mana = 0;
-let energy = 100;
-let gold = 0;
-let level = 1;
-let monsterHp = 100;
+<div class="menu">
+<button>🏠 Home</button>
+<button>🎒 Bag</button>
+<button>📖 Spells</button>
+<button>🏆 Pass</button>
+<button>👤 Profile</button>
+</div>
 
-function update(){
-document.getElementById("mana").textContent = mana;
-document.getElementById("energy").textContent = energy;
-document.getElementById("gold").textContent = gold;
-document.getElementById("level").textContent = level;
-document.getElementById("monsterhp").textContent = monsterHp;
+</div>
 
-let xp = (mana % (100 * level)) / (100 * level) * 100;
-document.getElementById("xpbar").style.width = xp + "%";
-}function tap(){
-    if(energy <= 0) return;
-
-    mana++;
-    energy--;
-
-    if(mana >= level * 100){
-        mana = 0;
-        level++;
-        alert("🎉 Level Up!");
-    }
-
-    update();
-}
-
-function dailyReward(){
-    gold += 100;
-    update();
-    alert("🎁 +100 Gold!");
-}
-
-function buySpell(){
-    if(gold < 200){
-        alert("❌ Need 200 Gold!");
-        return;
-    }
-
-    gold -= 200;
-    alert("🔥 Fireball unlocked!");
-    update();
-}
-
-function castFireball(){
-    if(energy < 20){
-        alert("⚡ Not enough Energy!");
-        return;
-    }
-
-    energy -= 20;
-    monsterHp -= 25;
-
-    if(monsterHp <= 0){
-        monsterHp = 100;
-        gold += 50;
-        alert("👹 Monster defeated! +50 Gold");
-    }
-
-    update();
-}
-
-setInterval(function(){
-    if(energy < 100){
-        energy++;
-        update();
-    }
-},1000);
-
-update();
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
