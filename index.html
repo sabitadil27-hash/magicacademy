@@ -6,11 +6,15 @@
 <title>Magic Academy</title>
 
 <style>
-body{
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
 font-family:Arial,sans-serif;
-background:radial-gradient(circle at top,#6d28d9 0%,#1b0036 35%,#05000d 100%);
-background-attachment:fixed;
+}
+
+body{
+background:linear-gradient(180deg,#2b1055,#120024,#05000d);
 color:white;
 display:flex;
 justify-content:center;
@@ -21,183 +25,182 @@ height:100vh;
 .game{
 width:360px;
 text-align:center;
+padding:20px;
 }
 
-.top{
+h1{
+color:#d8b4fe;
+margin-bottom:10px;
+}
+
+.stats{
 display:flex;
 justify-content:space-between;
-margin-bottom:20px;
+margin:15px 0;
 font-size:20px;
 }
 
+.bar{
+width:100%;
+height:12px;
+background:#2a1745;
+border-radius:10px;
+overflow:hidden;
+margin-bottom:15px;
+}
+
+.fill{
+height:100%;
+width:0%;
+background:#b84dff;
+}
+
+#monster{
+font-size:70px;
+margin:20px 0 10px;
+}
+
 .crystal{
-font-size:120px;
+font-size:110px;
 cursor:pointer;
-transition:.1s;
+transition:.15s;
 user-select:none;
-filter:drop-shadow(0 0 15px violet);
 }
 
 .crystal:active{
-transform:scale(.92);
+transform:scale(.9);
 }
 
-.level{
-margin-top:20px;
-font-size:22px;
+button{
+margin-top:10px;
+padding:10px 20px;
+border:none;
+border-radius:10px;
+font-size:17px;
+cursor:pointer;
+background:#7c3aed;
+color:white;
+}
+
+button:hover{
+background:#6d28d9;
 }
 
 .menu{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
+margin-top:20px;
 display:flex;
 justify-content:space-around;
-background:#1d1036;
-padding:15px;
 font-size:18px;
 }
-</style>
+    </style>
 </head>
 
 <body>
 
 <div class="game">
 
-<div class="top">
+<h1>🧙 Magic Academy</h1>
+<p>Become the strongest wizard!</p>
+
+<div class="stats">
 <div>💜 <span id="mana">0</span></div>
-<div>⚡ <span id="energy">100</span></div><div>🪙 <span id="gold">0</span></div>
-
-<div style="margin-top:15px;">
-XP
-<div style="width:100%;height:12px;background:#2a1745;border-radius:10px;">
-<div id="xpbar" style="width:0%;height:12px;background:#b84dff;border-radius:10px;"></div>
-</div>
+<div>⚡ <span id="energy">100</span></div>
+<div>🪙 <span id="gold">0</span></div>
 </div>
 
-<button onclick="dailyReward()" style="margin-top:20px;padding:10px 20px;border:none;border-radius:12px;background:#8b5cf6;color:white;font-size:18px;">
-🎁 Daily Reward
-</button>
-    <button onclick="castFireball()" style="margin-top:10px;padding:10px 20px;border:none;border-radius:12px;background:#ef4444;color:white;font-size:18px;">
-🔥 Fireball
-    </button>
+<div>Level <span id="level">1</span></div>
+
+<div class="bar">
+<div class="fill" id="xpbar"></div>
 </div>
 
-style="font-size:70px; margin-bottom:20px;">
-👹
-</div>
-
-<div>
-❤️ HP: <span id="monsterhp">100</span>/100
-</div>
+<div id="monster">👹</div>
+<div>❤️ HP: <span id="monsterhp">100</span>/100</div>
 
 <div class="crystal" onclick="tap()">
 🔮
 </div>
 
-<div class="level"><h2 style="color:#d8b4fe;">Magic Academy</h2>
-<p style="color:#c4b5fd;">Become the strongest wizard!</p>
-🧙 Level <span id="level">1</span>
-</div>
-
-</div>
+<button onclick="dailyReward()">🎁 Daily Reward</button>
+<button onclick="castFireball()">🔥 Fireball</button>
 
 <div class="menu">
-<div>🔮 Magic</div>
 <div onclick="buySpell()">📖 Spells</div>
 <div>🎒 Bag</div>
 <div>👤 Profile</div>
 </div>
 
 <script>
-    let monsterHp = 100;
-let mana = Number(localStorage.getItem("mana")) || 0;
-let energy = Number(localStorage.getItem("energy")) || 100;
-let level = Number(localStorage.getItem("level")) || 1;
+let mana = 0;
+let energy = 100;
+let gold = 0;
+let level = 1;
+let monsterHp = 100;
 
 function update(){
 document.getElementById("mana").textContent = mana;
 document.getElementById("energy").textContent = energy;
-document.getElementById("level").textContent = level;
 document.getElementById("gold").textContent = gold;
-document.getElementById("monsterhp").textContent = monsterHp;
+document.getElementById("level").textContent = level;
+document
+    function tap(){
+    if(energy <= 0) return;
 
-let xp=(mana%(100*level))/(100*level)*100;
-document.getElementById("xpbar").style.width=xp+"%";
+    mana++;
+    energy--;
+
+    if(mana >= level * 100){
+        mana = 0;
+        level++;
+        alert("🎉 Level Up!");
     }
 
-function tap(){
-    document.getElementById("monsterhp").textContent = monsterHp;
-if(energy<=0)return;
-
-mana++;
-energy--;
-
-if(mana>=100*level){
-level++;
+    update();
 }
-
-localStorage.setItem("mana",mana);
-localStorage.setItem("energy",energy);
-localStorage.setItem("level",level);
-
-update();document.getElementById("gold").textContent = gold;
-
-let xp=(mana%(100*level))/(100*level)*100;
-document.getElementById("xpbar").style.width=xp+"%";
-}
-
-setInterval(()=>{
-if(energy<100){
-energy++;
-localStorage.setItem("energy",energy);
-update();
-}
-},1000);
-
-update();
-let gold = Number(localStorage.getItem("gold")) || 0;
 
 function dailyReward(){
     gold += 100;
-    localStorage.setItem("gold", gold);
     update();
-    alert("🎉 You received 100 Gold!");
+    alert("🎁 +100 Gold!");
 }
+
 function buySpell(){
+    if(gold < 200){
+        alert("❌ Need 200 Gold!");
+        return;
+    }
 
-if(gold < 200){
-alert("❌ Need 200 Gold!");
-return;
+    gold -= 200;
+    alert("🔥 Fireball unlocked!");
+    update();
 }
 
-gold -= 200;
-localStorage.setItem("gold", gold);
-update();
-
-alert("🔥 You learned Fireball!");
-}
 function castFireball(){
+    if(energy < 20){
+        alert("⚡ Not enough Energy!");
+        return;
+    }
 
-if(energy < 20){
-alert("⚡ Not enough energy!");
-return;
+    energy -= 20;
+    monsterHp -= 25;
+
+    if(monsterHp <= 0){
+        monsterHp = 100;
+        gold += 50;
+        alert("👹 Monster defeated! +50 Gold");
+    }
+
+    update();
 }
 
-energy -= 20;
-monsterHp -= 25;
-
-if(monsterHp <= 0){
-monsterHp = 100;
-gold += 50;
-mana += 30;
-alert("👹 Monster defeated! +50 Gold");
-}
+setInterval(function(){
+    if(energy < 100){
+        energy++;
+        update();
+    }
+},1000);
 
 update();
-
-}
 </script>
 
 </body>
