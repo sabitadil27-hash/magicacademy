@@ -67,3 +67,9 @@ setInterval(()=>{
 },1000);
 
 update();
+localStorage.setItem("mana", mana);
+localStorage.setItem("energy", energy);
+localStorage.setItem("gold", gold);
+localStorage.setItem("level", level);
+localStorage.setItem("xp", xp);
+localStorage.setItem("monsterHP", monsterHP);
