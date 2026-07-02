@@ -94,7 +94,7 @@ XP
 
 <div class="menu">
 <div>🔮 Magic</div>
-<div>📖 Spells</div>
+<div onclick="buySpell()">📖 Spells</div>
 <div>🎒 Bag</div>
 <div>👤 Profile</div>
 </div>
@@ -146,6 +146,19 @@ function dailyReward(){
     localStorage.setItem("gold", gold);
     update();
     alert("🎉 You received 100 Gold!");
+}
+function buySpell(){
+
+if(gold < 200){
+alert("❌ Need 200 Gold!");
+return;
+}
+
+gold -= 200;
+localStorage.setItem("gold", gold);
+update();
+
+alert("🔥 You learned Fireball!");
 }
 </script>
 
