@@ -79,9 +79,22 @@ XP
 <button onclick="dailyReward()" style="margin-top:20px;padding:10px 20px;border:none;border-radius:12px;background:#8b5cf6;color:white;font-size:18px;">
 🎁 Daily Reward
 </button>
+    <button onclick="castFireball()" style="margin-top:10px;padding:10px 20px;border:none;border-radius:12px;background:#ef4444;color:white;font-size:18px;">
+🔥 Fireball
+    </button>
+</div>
+
+<div class="crystal" onclick="tap()"><div id="monster" style="font-size:70px; margin-bottom:20px;">
+👹
+</div>
+
+<div>
+❤️ HP: <span id="monsterhp">100</span>/100
 </div>
 
 <div class="crystal" onclick="tap()">
+🔮
+</div>
 🔮
 </div>
 
@@ -100,6 +113,7 @@ XP
 </div>
 
 <script>
+    let monsterHp = 100;
 let mana = Number(localStorage.getItem("mana")) || 0;
 let energy = Number(localStorage.getItem("energy")) || 100;
 let level = Number(localStorage.getItem("level")) || 1;
@@ -111,6 +125,7 @@ document.getElementById("level").textContent = level;
 }
 
 function tap(){
+    document.getElementById("monsterhp").textContent = monsterHp;
 if(energy<=0)return;
 
 mana++;
@@ -159,6 +174,26 @@ localStorage.setItem("gold", gold);
 update();
 
 alert("🔥 You learned Fireball!");
+}
+function castFireball(){
+
+if(energy < 20){
+alert("⚡ Not enough energy!");
+return;
+}
+
+energy -= 20;
+monsterHp -= 25;
+
+if(monsterHp <= 0){
+monsterHp = 100;
+gold += 50;
+mana += 30;
+alert("👹 Monster defeated! +50 Gold");
+}
+
+update();
+
 }
 </script>
 
