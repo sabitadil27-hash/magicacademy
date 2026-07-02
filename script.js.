@@ -1,8 +1,9 @@
-let mana = 0;
-let energy = 100;
-let gold = 0;
-let level = 1;
-let xp = 0;
+let mana = Number(localStorage.getItem("mana")) || 0;
+let energy = Number(localStorage.getItem("energy")) || 100;
+let gold = Number(localStorage.getItem("gold")) || 0;
+let level = Number(localStorage.getItem("level")) || 1;
+let xp = Number(localStorage.getItem("xp")) || 0;
+let monsterHP = Number(localStorage.getItem("monsterHP")) || 100;
 let monsterHP = 100;
 
 function update(){
